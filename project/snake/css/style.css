@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+  }
+  
+  #startScreen, #restartScreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: none;
+  }
+  
+  #startBtn, #restartBtn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ccc;
+    color: #222;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  #canvas {
+    display: block;
+    margin: auto;
+    background-color: #111;
+  }
+  
