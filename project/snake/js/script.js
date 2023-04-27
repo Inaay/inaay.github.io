@@ -49,10 +49,40 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
+const leftBtn = document.getElementById('leftBtn');
+const upBtn = document.getElementById('upBtn');
+const rightBtn = document.getElementById('rightBtn');
+const downBtn = document.getElementById('downBtn');
+
+leftBtn.addEventListener('click', function () {
+    if (direction !== 'right') {
+        direction = 'left';
+    }
+});
+
+upBtn.addEventListener('click', function () {
+    if (direction !== 'down') {
+        direction = 'up';
+    }
+});
+
+rightBtn.addEventListener('click', function () {
+    if (direction !== 'left') {
+        direction = 'right';
+    }
+});
+
+downBtn.addEventListener('click', function () {
+    if (direction !== 'up') {
+        direction = 'down';
+    }
+});
+
 function startGame() {
     document.getElementById('startScreen').style.display = 'none';
     canvas.style.display = 'block';
     intervalId = setInterval(gameLoop, speed);
+    document.getElementById('mobileControls').style.display = 'flex';
 }
 
 function restartGame() {
@@ -104,22 +134,17 @@ function moveSnake() {
             break;
     }
     snake.unshift(newHead);
-    if (checkFood()) {
-        score++;
-        document.getElementById('score').innerHTML = score;
-        food = getRandomFoodPosition();
-        speed -= 5;
-        clearInterval(intervalId);
-        intervalId = setInterval(gameLoop, speed);
-        snake.push({ x: snake[snake.length - 1].x, y: snake[snake.length - 1].y });
-    } else {
-        snake.pop();
+    if (snake[0].x === food.x && snake[0].y === food.y) {
+        return;
     }
+    snake.pop();
 }
 
 function checkCollisions() {
-    if (snake[0].x < 0 || snake[0].x >= canvas.width / tileSize ||
-        snake[0].y < 0 || snake[0].y >= canvas.height / tileSize) {
+    if (snake[0].x < 0 || snake[0].x >= canvas.width / tileSize) {
+        return true;
+    }
+    if (snake[0].y < 0 || snake[0].y >= canvas.height / tileSize) {
         return true;
     }
     for (let i = 1; i < snake.length; i++) {
@@ -139,26 +164,29 @@ function checkFood() {
 
 function endGame() {
     clearInterval(intervalId);
+    canvas.style.display = 'none';
+    document.getElementById('points').style.display = 'block';
     document.getElementById('score').innerHTML = score;
     document.getElementById('restartScreen').style.display = 'block';
-    canvas.style.display = 'none';
 }
 
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#6be06b';
     for (let i = 0; i < snake.length; i++) {
         ctx.fillRect(snake[i].x * tileSize, snake[i].y * tileSize, tileSize, tileSize);
     }
-    ctx.fillStyle = '#f00';
+    ctx.fillStyle = '#ff8080';
     ctx.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
 }
 
 function getRandomFoodPosition() {
-    let x = Math.floor(Math.random() * canvas.width / tileSize);
-    let y = Math.floor(Math.random() * canvas.height / tileSize);
-    if (snake.some(segment => segment.x === x && segment.y === y)) {
-        return getRandomFoodPosition();
+    let x = Math.floor(Math.random() * (canvas.width / tileSize));
+    let y = Math.floor(Math.random() * (canvas.height / tileSize));
+    for (let i = 0; i < snake.length; i++) {
+        if (x === snake[i].x && y === snake[i].y) {
+            return getRandomFoodPosition();
+        }
     }
     return { x: x, y: y };
 }

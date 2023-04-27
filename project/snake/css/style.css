@@ -2,29 +2,49 @@ body {
     margin: 0;
     padding: 0;
     background-color: #222;
-  }
-  
-  #startScreen, #restartScreen {
+}
+
+#startScreen,
+#restartScreen {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     display: none;
-  }
-  
-  #startBtn, #restartBtn {
+}
+
+#startBtn,
+#restartBtn {
     padding: 10px 20px;
     border: none;
     background-color: #ccc;
     color: #222;
     font-size: 20px;
     cursor: pointer;
-  }
-  
-  #canvas {
+}
+
+#canvas {
     display: block;
     margin: auto;
     background-color: #111;
-  }
-  
+}
+
+#mobileControls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+}
+
+#mobileControls button {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+    border: none;
+    background-color: #ccc;
+    color: #222;
+    font-size: 24px;
+    cursor: pointer;
+}
