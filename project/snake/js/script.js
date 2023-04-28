@@ -12,7 +12,7 @@ let snake = [
 let direction = 'right';
 let food = getRandomFoodPosition();
 let score = 0;
-let speed = 100;
+let speed = 75;
 let intervalId;
 let gameState = 'start';
 
